@@ -932,9 +932,54 @@
                 color: #050505
             }
 
+            .tunnel-flash {
+                position: fixed;
+                inset: 0;
+                z-index: 9998;
+                background: radial-gradient(circle at 50% 50%,#fff 0%,var(--orange) 35%,transparent 72%);
+                opacity: 0;
+                pointer-events: none
+            }
+
+            .tunnel-flash.flash {
+                animation: tunnelFlash 1s ease-out forwards
+            }
+
+            @keyframes tunnelFlash {
+                0% { opacity: 0 }
+                18% { opacity: .9 }
+                100% { opacity: 0 }
+            }
+
+            html:not(.no-intro) .nav,
+            html:not(.no-intro) .hero {
+                opacity: 0;
+                transform: scale(1.06);
+                filter: brightness(2.2)
+            }
+
+            html.tunnel-revealed .nav,
+            html.tunnel-revealed .hero {
+                opacity: 1;
+                transform: scale(1);
+                filter: brightness(1);
+                transition: opacity 1.05s cubic-bezier(.19,1,.22,1) .05s,transform 1.15s cubic-bezier(.19,1,.22,1) .05s,filter 1.2s ease .05s
+            }
+
             @media(prefers-reduced-motion:reduce) {
                 #intro-tunnel {
                     display: none
+                }
+
+                .tunnel-flash {
+                    display: none
+                }
+
+                html:not(.no-intro) .nav,
+                html:not(.no-intro) .hero {
+                    opacity: 1;
+                    transform: none;
+                    filter: none
                 }
             }
         </style>
@@ -942,10 +987,21 @@
             <video id="introVideo" src="assets/intro-tunnel.mp4" autoplay muted playsinline preload="auto"></video>
             <button id="introSkip" type="button">SKIP ↦</button>
         </div>
+        <div class="tunnel-flash" aria-hidden="true"></div>
         <noscript>
             <style>
                 #intro-tunnel {
                     display: none
+                }
+
+                .tunnel-flash {
+                    display: none
+                }
+
+                .nav,.hero {
+                    opacity: 1!important;
+                    transform: none!important;
+                    filter: none!important
                 }
             </style>
         </noscript>
@@ -957,12 +1013,16 @@
                 document.body.style.overflow = 'hidden';
                 var video = document.getElementById('introVideo')
                   , skipBtn = document.getElementById('introSkip')
+                  , flash = document.querySelector('.tunnel-flash')
                   , finished = false;
                 function finish() {
                     if (finished)
                         return;
                     finished = true;
                     overlay.classList.add('fade-out');
+                    if (flash)
+                        flash.classList.add('flash');
+                    document.documentElement.classList.add('tunnel-revealed');
                     document.body.style.overflow = '';
                     try {
                         localStorage.setItem('syslabo_intro_seen', '1')
