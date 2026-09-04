@@ -4,11 +4,8 @@
         <script>
             (function() {
                 try {
-                    var seen = localStorage.getItem('syslabo_intro_seen');
                     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-                    if (seen || reduce) {
-                        document.documentElement.className += ' no-intro';
-                    }
+                    if (reduce) document.documentElement.className += ' no-intro';
                 } catch (e) {
                     document.documentElement.className += ' no-intro';
                 }
@@ -902,13 +899,39 @@
                 pointer-events: none
             }
 
-            #introVideo {
+            #tunnelCanvas {
                 position: absolute;
                 inset: 0;
                 width: 100%;
                 height: 100%;
-                object-fit: cover;
                 display: block
+            }
+
+            .tunnel-hud {
+                position: absolute;
+                inset: 0;
+                z-index: 2;
+                pointer-events: none;
+                display: grid;
+                place-items: center;
+                color: var(--orange);
+                font-family: monospace;
+                letter-spacing: .22em;
+                text-align: center;
+                text-shadow: 0 0 16px rgba(255,100,30,.75)
+            }
+
+            .tunnel-hud strong {
+                display: block;
+                font-size: clamp(18px,2vw,30px)
+            }
+
+            .tunnel-hud small {
+                display: block;
+                margin-top: 9px;
+                font-size: 10px;
+                color: #c8ccd0;
+                letter-spacing: .32em
             }
 
             #introSkip {
@@ -932,76 +955,21 @@
                 color: #050505
             }
 
-            .tunnel-flash {
-                position: fixed;
-                inset: 0;
-                z-index: 9998;
-                background: radial-gradient(circle at 50% 50%,#fff 0%,var(--orange) 35%,transparent 72%);
-                opacity: 0;
-                pointer-events: none
-            }
-
-            .tunnel-flash.flash {
-                animation: tunnelFlash 1s ease-out forwards
-            }
-
-            @keyframes tunnelFlash {
-                0% { opacity: 0 }
-                18% { opacity: .9 }
-                100% { opacity: 0 }
-            }
-
-            html:not(.no-intro) .nav,
-            html:not(.no-intro) .hero {
-                opacity: 0;
-                transform: scale(1.06);
-                filter: brightness(2.2)
-            }
-
-            html.tunnel-revealed .nav,
-            html.tunnel-revealed .hero {
-                opacity: 1;
-                transform: scale(1);
-                filter: brightness(1);
-                transition: opacity 1.05s cubic-bezier(.19,1,.22,1) .05s,transform 1.15s cubic-bezier(.19,1,.22,1) .05s,filter 1.2s ease .05s
-            }
-
             @media(prefers-reduced-motion:reduce) {
                 #intro-tunnel {
                     display: none
                 }
-
-                .tunnel-flash {
-                    display: none
-                }
-
-                html:not(.no-intro) .nav,
-                html:not(.no-intro) .hero {
-                    opacity: 1;
-                    transform: none;
-                    filter: none
-                }
             }
         </style>
         <div id="intro-tunnel" aria-hidden="true">
-            <video id="introVideo" src="assets/intro-tunnel.mp4" autoplay muted playsinline preload="auto"></video>
+            <canvas id="tunnelCanvas"></canvas>
+            <div class="tunnel-hud"><div><strong>SYSLABO / 2026</strong><small>ENTERING WORLD FORUM TOKYO</small></div></div>
             <button id="introSkip" type="button">SKIP ↦</button>
         </div>
-        <div class="tunnel-flash" aria-hidden="true"></div>
         <noscript>
             <style>
                 #intro-tunnel {
                     display: none
-                }
-
-                .tunnel-flash {
-                    display: none
-                }
-
-                .nav,.hero {
-                    opacity: 1!important;
-                    transform: none!important;
-                    filter: none!important
                 }
             </style>
         </noscript>
@@ -1011,33 +979,92 @@
                 if (!overlay || document.documentElement.className.indexOf('no-intro') !== -1)
                     return;
                 document.body.style.overflow = 'hidden';
-                var video = document.getElementById('introVideo')
+                var canvas = document.getElementById('tunnelCanvas')
+                  , ctx = canvas.getContext('2d')
                   , skipBtn = document.getElementById('introSkip')
-                  , flash = document.querySelector('.tunnel-flash')
-                  , finished = false;
+                  , hud = overlay.querySelector('.tunnel-hud')
+                  , finished = false
+                  , start = performance.now()
+                  , duration = 3200
+                  , raf = 0;
+                function resize() {
+                    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+                    canvas.width = innerWidth * dpr;
+                    canvas.height = innerHeight * dpr;
+                    ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+                }
+                function draw(now) {
+                    var w = innerWidth, h = innerHeight, elapsed = now - start;
+                    var p = Math.min(1, elapsed / duration);
+                    var cx = w * .5 + Math.sin(p * 7) * w * .018;
+                    var cy = h * .5 + Math.cos(p * 5) * h * .014;
+                    ctx.fillStyle = '#050505';
+                    ctx.fillRect(0, 0, w, h);
+                    var glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(w, h) * .7);
+                    glow.addColorStop(0, 'rgba(255,100,30,' + (.18 + p * .16) + ')');
+                    glow.addColorStop(.28, 'rgba(25,201,232,.035)');
+                    glow.addColorStop(1, 'rgba(0,0,0,0)');
+                    ctx.fillStyle = glow;
+                    ctx.fillRect(0, 0, w, h);
+                    ctx.save();
+                    ctx.translate(cx, cy);
+                    ctx.globalCompositeOperation = 'lighter';
+                    for (var i = 0; i < 28; i++) {
+                        var a = i / 28 * Math.PI * 2 + p * .22;
+                        var inner = 18 + p * 7;
+                        var outer = Math.hypot(w, h) * .7;
+                        ctx.strokeStyle = i % 7 === 0 ? 'rgba(25,201,232,.55)' : 'rgba(255,100,30,.46)';
+                        ctx.lineWidth = i % 7 === 0 ? 1.4 : .8;
+                        ctx.beginPath();
+                        ctx.moveTo(Math.cos(a) * inner, Math.sin(a) * inner);
+                        ctx.lineTo(Math.cos(a) * outer, Math.sin(a) * outer);
+                        ctx.stroke()
+                    }
+                    for (var r = 0; r < 15; r++) {
+                        var z = ((r / 15 + p * 2.35) % 1);
+                        var radius = 22 + Math.pow(z, 2.35) * Math.hypot(w, h) * .57;
+                        ctx.strokeStyle = r % 4 === 0 ? 'rgba(25,201,232,' + (.12 + z * .42) + ')' : 'rgba(255,100,30,' + (.12 + z * .64) + ')';
+                        ctx.lineWidth = 1 + z * 4;
+                        ctx.setLineDash([Math.max(5, radius * .045), Math.max(8, radius * .025)]);
+                        ctx.beginPath();
+                        ctx.arc(0, 0, radius, 0, Math.PI * 2);
+                        ctx.stroke()
+                    }
+                    ctx.setLineDash([]);
+                    for (var q = 0; q < 46; q++) {
+                        var seed = (q * 19.73) % 1;
+                        var travel = (seed + p * (1.8 + q % 3 * .18)) % 1;
+                        var angle = q * 2.399;
+                        var dist = 28 + Math.pow(travel, 2.6) * Math.hypot(w, h) * .55;
+                        var size = .8 + travel * 3.5;
+                        ctx.fillStyle = q % 9 === 0 ? '#19c9e8' : '#ff641e';
+                        ctx.fillRect(Math.cos(angle) * dist - size / 2, Math.sin(angle) * dist - size / 2, size, size)
+                    }
+                    ctx.restore();
+                    if (p > .76) {
+                        var flash = Math.pow((p - .76) / .24, 3);
+                        ctx.fillStyle = 'rgba(255,116,48,' + flash + ')';
+                        ctx.fillRect(0, 0, w, h);
+                        hud.style.opacity = String(1 - flash)
+                    }
+                    if (p < 1 && !finished) raf = requestAnimationFrame(draw);
+                    else finish()
+                }
                 function finish() {
                     if (finished)
                         return;
                     finished = true;
+                    cancelAnimationFrame(raf);
                     overlay.classList.add('fade-out');
-                    if (flash)
-                        flash.classList.add('flash');
-                    document.documentElement.classList.add('tunnel-revealed');
                     document.body.style.overflow = '';
-                    try {
-                        localStorage.setItem('syslabo_intro_seen', '1')
-                    } catch (e) {}
                     setTimeout(function() {
                         overlay.style.display = 'none';
-                        video.pause()
                     }, 750)
                 }
-                video.addEventListener('ended', finish);
-                video.addEventListener('error', finish);
                 skipBtn.addEventListener('click', finish);
-                var playPromise = video.play();
-                if (playPromise && playPromise.catch)
-                    playPromise.catch(finish)
+                addEventListener('resize', resize, {passive: true});
+                resize();
+                raf = requestAnimationFrame(draw)
             })();
         </script>
         <nav class="nav wrap">
