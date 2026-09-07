@@ -607,6 +607,91 @@
             }
         </style>
         <style>
+            body {
+                padding-top: 74px
+            }
+
+            .nav {
+                border-bottom: 0
+            }
+
+            section[id] {
+                scroll-margin-top: 74px
+            }
+
+            .site-ribbon {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 50;
+                background: rgba(5,5,5,.92);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border-bottom: 1px solid #242424
+            }
+
+            .nav a.nav-cta {
+                background: var(--orange);
+                color: #060606;
+                padding: 8px 16px;
+                font-weight: 900;
+                white-space: nowrap
+            }
+
+            .nav a.nav-cta:hover {
+                background: #fff;
+                color: #060606
+            }
+
+            .sessions-list {
+                display: grid;
+                gap: 24px;
+                margin-top: 56px
+            }
+
+            .session-card {
+                padding: 32px clamp(24px,4vw,48px);
+                border: 1px solid #3a3a3a;
+                background: linear-gradient(150deg,#181818,#0c0c0c);
+                position: relative
+            }
+
+            .session-meta {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: baseline;
+                justify-content: space-between;
+                gap: 10px 20px;
+                margin-bottom: 20px
+            }
+
+            .session-meta .no {
+                font: 13px monospace;
+                letter-spacing: .08em;
+                color: var(--orange)
+            }
+
+            .session-date {
+                font: 700 13px monospace;
+                letter-spacing: .04em;
+                color: #c8ccd0;
+                white-space: nowrap
+            }
+
+            .session-card h3 {
+                font-size: clamp(20px,2.2vw,28px);
+                line-height: 1.45;
+                margin: 0 0 18px
+            }
+
+            .session-card p {
+                color: #92979c;
+                font-size: 15px;
+                line-height: 1.85;
+                margin: 0
+            }
+
             br.br-mobile {
                 display: none
             }
@@ -1097,23 +1182,27 @@
                 setTimeout(finish, duration)
             })();
         </script>
-        <nav class="nav wrap">
-            <div class="brand">
-                <i>SYS</i>
-                LABO
-            </div>
-            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navlinks" aria-label="メニュー">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <div class="navlinks" id="navlinks">
-                <a href="#about">ABOUT</a>
-                <a href="#topics">TOPICS</a>
-                <a href="#speaker">SPEAKER</a>
-                <a href="#join">JOIN US</a>
-            </div>
-        </nav>
+        <div class="site-ribbon">
+            <nav class="nav wrap">
+                <div class="brand">
+                    <i>SYS</i>
+                    LABO
+                </div>
+                <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navlinks" aria-label="メニュー">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="navlinks" id="navlinks">
+                    <a href="#about">ABOUT</a>
+                    <a href="#topics">TOPICS</a>
+                    <a href="#speaker">SPEAKER</a>
+                    <a href="#sessions">SESSIONS</a>
+                    <a href="#join">JOIN US</a>
+                    <a class="nav-cta" href="https://www.servicenow.com/it/events/world-forum/tokyo.html" target="_blank" rel="noopener">来場登録 ↗</a>
+                </div>
+            </nav>
+        </div>
         <script>
             (function() {
                 var toggle = document.querySelector('.nav-toggle')
@@ -1285,6 +1374,32 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </section>
+            <section id="sessions" class="section">
+                <div class="wrap">
+                    <div class="overline reveal">SPEAKING SESSIONS</div>
+                    <h2 class="display reveal">
+                        登壇する、<br><span class="stroke orange-flicker">2つのセッション。</span>
+                    </h2>
+                    <div class="sessions-list">
+                        <article class="session-card reveal">
+                            <div class="session-meta">
+                                <span class="no">01 / CUSTOMER SPOTLIGHT</span>
+                                <span class="session-date">10月27日(火) 14:25-14:45</span>
+                            </div>
+                            <h3>カスタマー・スポットライト:ServiceNow活用ジャーニー<br>〜6社が語る導入から拡大までのリアル</h3>
+                            <p>導入直後の企業から、10年以上かけて全社へ展開してきた企業まで、業種も規模も導入フェーズも異なる6社が登壇。ITSMから始まりCSMやSPM、ITOM、セキュリティ、HRSDへと領域を広げた事例、社内の汎用ワークフローを統合した事例、AIエージェント活用で業務を高度化した事例など、それぞれの言葉でリアルな軌跡を語っていただくカスタマー・スポットライト・セッションです。</p>
+                        </article>
+                        <article class="session-card reveal">
+                            <div class="session-meta">
+                                <span class="no">02 / EMPLOYEEWORKS</span>
+                                <span class="session-date">10月28日(水) 13:50-14:10</span>
+                            </div>
+                            <h3>「探す」をなくす。EmployeeWorksによるAI統合ポータル<br>〜社内ナレッジ統合と国内初導入の体験談</h3>
+                            <p>EmployeeWorksを活用して各システムのナレッジだけでなく、AIの成長自体を統合し、「探す」をなくすまでの事例をご紹介。ナレッジ管理や生成AI機能が各システムに標準搭載され、情報活用の運用が分散しがちな時代において、システム刷新やデータ移行を伴わずにAI活用を進化させた取り組みと、国内初導入として手探りで進めた導入の軌跡をお話しします。</p>
+                        </article>
                     </div>
                 </div>
             </section>
