@@ -651,10 +651,24 @@
             }
 
             .session-card {
-                padding: 32px clamp(24px,4vw,48px);
                 border: 1px solid #3a3a3a;
                 background: linear-gradient(150deg,#181818,#0c0c0c);
-                position: relative
+                position: relative;
+                transition: transform .45s cubic-bezier(.2,.9,.25,1.4),border-color .3s,box-shadow .45s
+            }
+
+            .session-card:hover {
+                transform: translateY(-10px);
+                border-color: var(--orange);
+                box-shadow: 0 28px 64px rgba(126,211,33,.3),0 0 0 1px rgba(126,211,33,.5),0 0 40px rgba(126,211,33,.18);
+                z-index: 2
+            }
+
+            .session-link {
+                display: block;
+                padding: 32px clamp(24px,4vw,48px);
+                color: inherit;
+                text-decoration: none
             }
 
             .session-meta {
@@ -690,6 +704,19 @@
                 font-size: 15px;
                 line-height: 1.85;
                 margin: 0
+            }
+
+            .session-more {
+                display: inline-block;
+                margin-top: 22px;
+                font: 700 13px monospace;
+                letter-spacing: .1em;
+                color: var(--orange);
+                transition: text-shadow .3s
+            }
+
+            .session-card:hover .session-more {
+                text-shadow: 0 0 12px var(--orange)
             }
 
             br.br-mobile {
@@ -1385,20 +1412,26 @@
                     </h2>
                     <div class="sessions-list">
                         <article class="session-card reveal">
-                            <div class="session-meta">
-                                <span class="no">01 / CUSTOMER SPOTLIGHT</span>
-                                <span class="session-date">10月27日(火) 14:25-14:45</span>
-                            </div>
-                            <h3>カスタマー・スポットライト:ServiceNow活用ジャーニー<br>〜6社が語る導入から拡大までのリアル</h3>
-                            <p>導入直後の企業から、10年以上かけて全社へ展開してきた企業まで、業種も規模も導入フェーズも異なる6社が登壇。ITSMから始まりCSMやSPM、ITOM、セキュリティ、HRSDへと領域を広げた事例、社内の汎用ワークフローを統合した事例、AIエージェント活用で業務を高度化した事例など、それぞれの言葉でリアルな軌跡を語っていただくカスタマー・スポットライト・セッションです。</p>
+                            <a class="session-link" href="https://reg.servicenow.com/flow/servicenow/wftokyo26/sessions/page/sessions/session/1784183118004001wHwq" target="_blank" rel="noopener">
+                                <div class="session-meta">
+                                    <span class="no">01 / CUSTOMER SPOTLIGHT</span>
+                                    <span class="session-date">10月27日(火) 14:25-14:45</span>
+                                </div>
+                                <h3>カスタマー・スポットライト:ServiceNow活用ジャーニー<br>〜6社が語る導入から拡大までのリアル</h3>
+                                <p>導入直後の企業から、10年以上かけて全社へ展開してきた企業まで、業種も規模も導入フェーズも異なる6社が登壇。ITSMから始まりCSMやSPM、ITOM、セキュリティ、HRSDへと領域を広げた事例、社内の汎用ワークフローを統合した事例、AIエージェント活用で業務を高度化した事例など、それぞれの言葉でリアルな軌跡を語っていただくカスタマー・スポットライト・セッションです。</p>
+                                <span class="session-more">セッション詳細へ ↗</span>
+                            </a>
                         </article>
                         <article class="session-card reveal">
-                            <div class="session-meta">
-                                <span class="no">02 / EMPLOYEEWORKS</span>
-                                <span class="session-date">10月28日(水) 13:50-14:10</span>
-                            </div>
-                            <h3>「探す」をなくす。EmployeeWorksによるAI統合ポータル<br>〜社内ナレッジ統合と国内初導入の体験談</h3>
-                            <p>EmployeeWorksを活用して各システムのナレッジだけでなく、AIの成長自体を統合し、「探す」をなくすまでの事例をご紹介。ナレッジ管理や生成AI機能が各システムに標準搭載され、情報活用の運用が分散しがちな時代において、システム刷新やデータ移行を伴わずにAI活用を進化させた取り組みと、国内初導入として手探りで進めた導入の軌跡をお話しします。</p>
+                            <a class="session-link" href="https://reg.servicenow.com/flow/servicenow/wftokyo26/sessions/page/sessions/session/1782253395633001lqbS" target="_blank" rel="noopener">
+                                <div class="session-meta">
+                                    <span class="no">02 / EMPLOYEEWORKS</span>
+                                    <span class="session-date">10月28日(水) 13:50-14:10</span>
+                                </div>
+                                <h3>「探す」をなくす。EmployeeWorksによるAI統合ポータル<br>〜社内ナレッジ統合と国内初導入の体験談</h3>
+                                <p>EmployeeWorksを活用して各システムのナレッジだけでなく、AIの成長自体を統合し、「探す」をなくすまでの事例をご紹介。ナレッジ管理や生成AI機能が各システムに標準搭載され、情報活用の運用が分散しがちな時代において、システム刷新やデータ移行を伴わずにAI活用を進化させた取り組みと、国内初導入として手探りで進めた導入の軌跡をお話しします。</p>
+                                <span class="session-more">セッション詳細へ ↗</span>
+                            </a>
                         </article>
                     </div>
                 </div>
