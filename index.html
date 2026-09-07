@@ -104,19 +104,6 @@
                 overflow: hidden
             }
 
-            .hero-img {
-                position: absolute;
-                inset: 0;
-                background: url('assets/keyvisual-orange.png') center/cover no-repeat
-            }
-
-            .hero-img:after {
-                content: "";
-                position: absolute;
-                inset: 0;
-                background: linear-gradient(180deg,transparent 68%,#050505 100%)
-            }
-
             .hero-note {
                 display: none
             }
@@ -440,16 +427,6 @@
                     align-items: flex-end
                 }
 
-                .hero-img {
-                    background-position: center top;
-                    background-size: auto 60%;
-                    background-repeat: no-repeat
-                }
-
-                .hero-img:after {
-                    background: linear-gradient(180deg,transparent 35%,#050505 62%)
-                }
-
                 .hero-note {
                     display: block;
                     position: relative;
@@ -625,6 +602,82 @@
                 .hero-progress {
                     right: 12px;
                     height: 120px
+                }
+            }
+        </style>
+        <style>
+            @supports not (-webkit-text-stroke: 1px black) {
+                .display .stroke {
+                    color: #81868b
+                }
+            }
+
+            .nav-toggle {
+                display: none;
+                appearance: none;
+                border: 0;
+                background: transparent;
+                width: 30px;
+                height: 22px;
+                padding: 0;
+                cursor: pointer;
+                flex-direction: column;
+                justify-content: space-between;
+                position: relative;
+                z-index: 5
+            }
+
+            .nav-toggle span {
+                display: block;
+                height: 2px;
+                background: var(--white);
+                border-radius: 1px
+            }
+
+            @media(max-width: 800px) {
+                .hero {
+                    height: auto;
+                    min-height: 0;
+                    align-items: stretch
+                }
+
+                .hero-stage {
+                    height: auto;
+                    aspect-ratio: 1672/941
+                }
+
+                .hero-stage .scroll,.hero-progress {
+                    display: none
+                }
+
+                #speaker .speaker-front img {
+                    object-fit: contain
+                }
+
+                .nav-toggle {
+                    display: flex
+                }
+
+                .navlinks {
+                    display: none;
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    right: 0;
+                    flex-direction: column;
+                    gap: 0;
+                    background: #0b0b0b;
+                    border-bottom: 1px solid var(--line);
+                    z-index: 6
+                }
+
+                .navlinks a {
+                    padding: 16px 24px;
+                    border-top: 1px solid var(--line)
+                }
+
+                .nav.nav-open .navlinks {
+                    display: flex
                 }
             }
         </style>
@@ -1038,13 +1091,36 @@
                 <i>SYS</i>
                 LABO
             </div>
-            <div class="navlinks">
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navlinks" aria-label="メニュー">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="navlinks" id="navlinks">
                 <a href="#about">ABOUT</a>
                 <a href="#topics">TOPICS</a>
                 <a href="#speaker">SPEAKER</a>
                 <a href="#join">JOIN US</a>
             </div>
         </nav>
+        <script>
+            (function() {
+                var toggle = document.querySelector('.nav-toggle')
+                  , nav = document.querySelector('.nav');
+                if (!toggle || !nav)
+                    return;
+                toggle.addEventListener('click', function() {
+                    var open = nav.classList.toggle('nav-open');
+                    toggle.setAttribute('aria-expanded', open ? 'true' : 'false')
+                });
+                nav.querySelectorAll('.navlinks a').forEach(function(a) {
+                    a.addEventListener('click', function() {
+                        nav.classList.remove('nav-open');
+                        toggle.setAttribute('aria-expanded', 'false')
+                    })
+                })
+            })();
+        </script>
         <header class="hero" aria-label="SYSLABO WORLD FORUM 2026 TOKYO。スクロールすると見出し文字が分解します。">
             <div class="hero-stage">
                 <canvas class="hero-canvas" width="1280" height="720"></canvas>
