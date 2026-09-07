@@ -292,7 +292,8 @@
             }
 
             .speaker-shell {
-                position: relative
+                position: relative;
+                overflow: hidden
             }
 
             .speaker-shell:before {
@@ -606,6 +607,16 @@
             }
         </style>
         <style>
+            br.br-mobile {
+                display: none
+            }
+
+            @media(max-width: 800px) {
+                br.br-mobile {
+                    display: inline
+                }
+            }
+
             @supports not (-webkit-text-stroke: 1px black) {
                 .display .stroke {
                     color: #81868b
@@ -1200,7 +1211,7 @@
                         <div class="overline">PARTNER SESSION</div>
                         <h2 class="display">
                             変革を、<br>
-                            <span class="stroke orange-flicker">構想で終わらせない。</span>
+                            <span class="stroke orange-flicker">構想で<br class="br-mobile">終わらせない。</span>
                         </h2>
                     </div>
                     <div>
@@ -1216,7 +1227,7 @@
                 <div class="wrap">
                     <div class="overline reveal">SESSION TOPICS</div>
                     <h2 class="display reveal">
-                        現場から、<span class="stroke orange-flicker">未来を動かす。</span>
+                        現場から、<br class="br-mobile"><span class="stroke orange-flicker">未来を動かす。</span>
                     </h2>
                     <div class="topics">
                         <article class="topic reveal">
@@ -1281,7 +1292,7 @@
                 <div class="wrap reveal">
                     <div class="overline">MEET US IN TOKYO</div>
                     <h2 class="display">
-                        会場で、<span style="color:var(--orange)">次の変革を。</span>
+                        会場で、<br class="br-mobile"><span style="color:var(--orange)">次の変革を。</span>
                     </h2>
                     <p>講演テーマ、開始時刻などの詳細は決定次第お知らせします。イベントの最新情報と参加登録は、公式サイトをご確認ください。</p>
                     <a class="btn" href="https://www.servicenow.com/it/events/world-forum/tokyo.html" target="_blank" rel="noopener">
