@@ -946,7 +946,17 @@
             .speaker-flip {
                 perspective: 1800px;
                 max-width: 960px;
-                margin: 0 auto
+                margin: 0 auto;
+                cursor: pointer;
+                transition: transform .35s ease
+            }
+
+            .speaker-flip:hover {
+                transform: translateY(-10px)
+            }
+
+            .speaker-flip:hover .speaker-card {
+                box-shadow: 0 28px 64px rgba(126,211,33,.3),0 0 0 1px rgba(126,211,33,.5),0 0 40px rgba(126,211,33,.18)
             }
 
             .speaker-card {
@@ -1567,12 +1577,13 @@
             document.querySelectorAll('.reveal').forEach(el => io.observe(el));
             const mapToggle = document.querySelector('.map-toggle')
               , speakerFlip = document.querySelector('.speaker-flip');
-            mapToggle.addEventListener('click', () => {
+            function flipSpeakerCard() {
                 const flipped = speakerFlip.classList.toggle('is-flipped');
                 mapToggle.setAttribute('aria-pressed', String(flipped));
                 mapToggle.textContent = flipped ? 'SPEAKER' : 'MAP'
             }
-            );
+            mapToggle.addEventListener('click', flipSpeakerCard);
+            speakerFlip.addEventListener('click', flipSpeakerCard);
         </script>
     </body>
 </html>
