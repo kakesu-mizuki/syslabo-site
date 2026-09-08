@@ -892,12 +892,11 @@
                 letter-spacing: inherit;
                 white-space: nowrap;
                 -webkit-text-stroke: 1px transparent;
-                background: radial-gradient(var(--gsize,260px) circle at var(--x,50%) var(--y,50%),#ffffff 0%,#c8ffb0 18%,#8dff57 38%,#7ed321 58%,transparent 74%);
+                background: radial-gradient(var(--gsize,90px) circle at var(--x,-9999px) var(--y,-9999px),#ffffff 0%,#c8ffb0 20%,#8dff57 45%,#7ed321 68%,transparent 85%);
                 -webkit-background-clip: text;
                 background-clip: text;
                 -webkit-text-fill-color: transparent;
-                text-shadow: 0 0 4px #fff,0 0 12px #baff7a,0 0 26px #7ed321,0 0 55px rgba(126,211,33,.9),0 0 95px rgba(126,211,33,.5);
-                opacity: var(--gintensity,0);
+                text-shadow: 0 0 3px #fff,0 0 8px #baff7a,0 0 16px #7ed321,0 0 28px rgba(126,211,33,.8);
                 pointer-events: none
             }
 
@@ -921,22 +920,13 @@
                 els.forEach(function(el) {
                     el.setAttribute('data-glow-text', el.textContent)
                 });
-                var maxDist = 280
-                  , mouseX = -9999
+                var mouseX = -9999
                   , mouseY = -9999
                   , ticking = false;
-                function distToRect(px, py, r) {
-                    var dx = Math.max(r.left - px, 0, px - r.right)
-                      , dy = Math.max(r.top - py, 0, py - r.bottom);
-                    return Math.hypot(dx, dy)
-                }
                 function update() {
                     ticking = false;
                     els.forEach(function(el) {
-                        var r = el.getBoundingClientRect()
-                          , dist = distToRect(mouseX, mouseY, r)
-                          , intensity = Math.max(0, 1 - dist / maxDist);
-                        el.style.setProperty('--gintensity', intensity.toFixed(2));
+                        var r = el.getBoundingClientRect();
                         el.style.setProperty('--x', (mouseX - r.left) + 'px');
                         el.style.setProperty('--y', (mouseY - r.top) + 'px')
                     })
