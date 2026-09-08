@@ -877,7 +877,7 @@
                 text-shadow: 0 0 6px rgba(126,211,33,.22);
             }
 
-            .orange-flicker::after {
+            .orange-flicker::before,.orange-flicker::after {
                 content: attr(data-glow-text);
                 position: absolute;
                 inset: 0;
@@ -896,12 +896,16 @@
                 -webkit-background-clip: text;
                 background-clip: text;
                 -webkit-text-fill-color: transparent;
-                text-shadow: 0 0 3px #fff,0 0 8px #baff7a,0 0 16px #7ed321,0 0 28px rgba(126,211,33,.8);
                 pointer-events: none
             }
 
+            .orange-flicker::before {
+                filter: blur(9px);
+                opacity: .85
+            }
+
             @media(prefers-reduced-motion:reduce) {
-                .orange-flicker::after {
+                .orange-flicker::before,.orange-flicker::after {
                     display: none
                 }
 
