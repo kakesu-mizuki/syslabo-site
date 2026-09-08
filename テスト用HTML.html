@@ -1040,6 +1040,72 @@
                 animation: wfFloat 6s ease-in-out infinite
             }
 
+            #heroEmbed .hud-card {
+                fill: url(#wfPanelGlass);
+                stroke-width: 1.2;
+                filter: url(#wfPanelGlow)
+            }
+
+            #heroEmbed .hud-grid {
+                stroke: #82ff29;
+                stroke-width: .5;
+                opacity: .22
+            }
+
+            #heroEmbed .hud-copy {
+                font-family: "IBM Plex Mono",monospace;
+                letter-spacing: 1.3px
+            }
+
+            #heroEmbed .hud-scan {
+                animation: wfHudScan 3.6s linear infinite
+            }
+
+            #heroEmbed .chart-line {
+                fill: none;
+                stroke: #78f000;
+                stroke-width: 2;
+                stroke-dasharray: 5 3;
+                filter: url(#wfSoftGlow);
+                animation: wfFlow 4s linear infinite
+            }
+
+            #heroEmbed .orbit {
+                fill: none;
+                stroke: #00b9e8;
+                stroke-width: 1;
+                stroke-dasharray: 3 4;
+                transform-box: fill-box;
+                transform-origin: center;
+                animation: wfSpin 12s linear infinite
+            }
+
+            #heroEmbed .wave-surface {
+                fill: url(#wfWaveFill);
+                opacity: .18;
+                filter: url(#wfSoftGlow)
+            }
+
+            #heroEmbed .wave-thread {
+                fill: none;
+                stroke-width: 1.2;
+                opacity: .56;
+                stroke-dasharray: 4 7;
+                animation: wfFlow 7s linear infinite
+            }
+
+            #heroEmbed .wave-cross {
+                fill: none;
+                stroke: #8cff35;
+                stroke-width: .7;
+                opacity: .28
+            }
+
+            #heroEmbed .data-particle {
+                filter: drop-shadow(0 0 5px currentColor);
+                animation: wfDataPulse 2.6s ease-in-out infinite
+            }
+
             #heroEmbed .node {
                 animation: wfPulse 2.4s ease-in-out infinite;
                 transform-box: fill-box;
@@ -1213,6 +1279,29 @@
                 50% {
                     transform: scale(1.5);
                     opacity: .45
+                }
+            }
+
+            @keyframes wfDataPulse {
+                50% {
+                    opacity: .35;
+                    transform: scale(.65)
+                }
+            }
+
+            @keyframes wfHudScan {
+                from {
+                    transform: translateY(-70px)
+                }
+
+                to {
+                    transform: translateY(135px)
+                }
+            }
+
+            @keyframes wfSpin {
+                to {
+                    transform: rotate(360deg)
                 }
             }
 
@@ -1864,15 +1953,48 @@
                         <div class="date">OCT. 27—28, 2026</div>
                     </section>
                     <svg class="art" viewBox="0 0 1600 900" aria-hidden="true">
-                        <defs><linearGradient id="wfg" x1="0" x2="1"><stop stop-color="#78f000"/><stop offset="1" stop-color="#14ff86" stop-opacity=".15"/></linearGradient><linearGradient id="wfb"><stop stop-color="#00b9e8"/><stop offset="1" stop-color="#00b9e8" stop-opacity="0"/></linearGradient></defs>
-                        <g class="cards" opacity=".72">
-                            <rect x="1160" y="80" width="220" height="135" rx="9" fill="#142018" fill-opacity=".55" stroke="#78f000" transform="rotate(8 1160 80)"/>
-                            <rect x="1240" y="135" width="205" height="130" rx="9" fill="#082234" fill-opacity=".52" stroke="#00b9e8" transform="rotate(8 1240 135)"/>
-                            <rect x="1165" y="205" width="150" height="85" rx="8" fill="#aeb4b0" fill-opacity=".17" stroke="#8c9690"/>
-                            <rect x="1350" y="101" width="58" height="19" rx="7" fill="#78f000"/>
+                        <defs>
+                            <linearGradient id="wfg" x1="0" x2="1"><stop stop-color="#78f000"/><stop offset="1" stop-color="#14ff86" stop-opacity=".15"/></linearGradient><linearGradient id="wfb"><stop stop-color="#00b9e8"/><stop offset="1" stop-color="#00b9e8" stop-opacity="0"/></linearGradient>
+                            <linearGradient id="wfPanelGlass" x2="1" y2="1"><stop stop-color="#314038" stop-opacity=".52"/><stop offset=".45" stop-color="#0b1410" stop-opacity=".72"/><stop offset="1" stop-color="#0aa8d1" stop-opacity=".15"/></linearGradient>
+                            <linearGradient id="wfWaveFill" x2="0" y2="1"><stop stop-color="#78f000"/><stop offset="1" stop-color="#00b9e8" stop-opacity="0"/></linearGradient>
+                            <filter id="wfPanelGlow"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                            <filter id="wfSoftGlow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                            <clipPath id="wfClipA"><rect x="1135" y="63" width="250" height="146" rx="8"/></clipPath>
+                        </defs>
+                        <g class="cards" opacity=".9">
+                            <g transform="rotate(7 1260 135)">
+                                <rect class="hud-card" x="1135" y="63" width="250" height="146" rx="8" stroke="#78f000"/>
+                                <g class="hud-grid"><path d="M1150 92H1370M1150 120H1370M1150 148H1370M1150 176H1370M1188 77V194M1230 77V194M1272 77V194M1314 77V194M1356 77V194"/></g>
+                                <text class="hud-copy" x="1153" y="86" fill="#a7ff64" font-size="8">SYS / NODE MAP 06</text><text class="hud-copy" x="1310" y="86" fill="#78f000" font-size="7">98.7%</text>
+                                <path class="chart-line" d="M1151 169L1170 155L1186 161L1204 132L1224 146L1244 113L1264 123L1285 94L1305 116L1326 103L1352 120L1370 97"/>
+                                <g fill="#78f000"><circle class="node" cx="1204" cy="132" r="4"/><circle class="node" cx="1244" cy="113" r="5"/><circle class="node" cx="1285" cy="94" r="4"/><circle class="node" cx="1370" cy="97" r="4"/></g>
+                                <rect class="hud-scan" x="1137" y="68" width="246" height="12" fill="#78f000" opacity=".08" clip-path="url(#wfClipA)"/>
+                            </g>
+                            <g transform="rotate(8 1350 205)">
+                                <rect class="hud-card" x="1260" y="132" width="205" height="137" rx="8" stroke="#00b9e8"/>
+                                <circle class="orbit" cx="1320" cy="199" r="42"/><circle class="orbit" cx="1320" cy="199" r="29" style="animation-direction:reverse;animation-duration:8s"/>
+                                <path d="M1283 199H1357M1320 162V236" stroke="#00b9e8" opacity=".35"/><circle cx="1320" cy="199" r="7" fill="#ecfff6" filter="url(#wfSoftGlow)"/>
+                                <g class="hud-copy" font-size="7" fill="#75dff8"><text x="1372" y="161">SIGNAL</text><text x="1372" y="177">LIVE  08</text><text x="1372" y="211">LAT 35.6</text><text x="1372" y="225">LON 139.7</text><text x="1372" y="249" fill="#78f000">CONNECTED</text></g>
+                            </g>
+                            <g transform="rotate(-4 1200 250)">
+                                <rect class="hud-card" x="1136" y="202" width="158" height="91" rx="7" stroke="#a5b2ab" opacity=".8"/>
+                                <g fill="#78f000"><rect x="1153" y="259" width="10" height="17"/><rect x="1169" y="245" width="10" height="31"/><rect x="1185" y="252" width="10" height="24"/><rect x="1201" y="226" width="10" height="50"/><rect x="1217" y="237" width="10" height="39"/></g>
+                                <path d="M1149 218H1277M1149 230H1176" stroke="#d8dedb" opacity=".6"/><text class="hud-copy" x="1240" y="272" fill="#00b9e8" font-size="8">DATA</text>
+                            </g>
+                            <rect x="1358" y="74" width="67" height="20" rx="5" fill="#78f000" filter="url(#wfSoftGlow)"/><text class="hud-copy" x="1370" y="88" fill="#071004" font-size="8">ACTIVE</text>
                         </g>
-                        <path class="wave" d="M1060 315 C1150 240 1210 390 1300 325 S1460 225 1650 280" stroke="url(#wfg)" stroke-width="48" opacity=".65"/>
-                        <path class="wave" d="M1110 380 C1210 320 1290 480 1390 410 S1510 350 1650 405" stroke="url(#wfb)" stroke-width="34" opacity=".55" style="animation-direction:reverse"/>
+                        <path class="wave-surface" d="M1020 320C1130 231 1200 397 1310 315S1490 236 1620 277L1620 424C1490 380 1420 476 1300 407S1130 365 1020 410Z"/>
+                        <g>
+                            <path class="wave-thread" d="M1020 305C1130 221 1200 382 1310 300S1490 221 1630 262" stroke="#78f000"/>
+                            <path class="wave-thread" d="M1018 316C1130 232 1200 393 1310 311S1490 232 1630 273" stroke="#8cff35"/>
+                            <path class="wave-thread" d="M1016 327C1130 243 1200 404 1310 322S1490 243 1630 284" stroke="#a2ff62"/>
+                            <path class="wave-thread" d="M1014 338C1130 254 1200 415 1310 333S1490 254 1630 295" stroke="#78f000"/>
+                            <path class="wave-thread" d="M1030 362C1150 300 1235 450 1345 374S1510 314 1630 350" stroke="#00b9e8" style="animation-direction:reverse"/>
+                            <path class="wave-thread" d="M1028 375C1150 313 1235 463 1345 387S1510 327 1630 363" stroke="#2bd9ff" style="animation-direction:reverse"/>
+                            <path class="wave-thread" d="M1026 388C1150 326 1235 476 1345 400S1510 340 1630 376" stroke="#00b9e8" style="animation-direction:reverse"/>
+                        </g>
+                        <g class="wave-cross"><path d="M1070 274L1082 353M1110 263L1123 340M1152 275L1166 343M1194 303L1208 363M1236 325L1250 389M1278 320L1292 407M1320 292L1335 401M1362 267L1378 373M1405 258L1421 348M1448 264L1464 342M1490 277L1507 351M1534 287L1551 363"/></g>
+                        <g fill="#efffe9"><circle class="data-particle" cx="1110" cy="263" r="3"/><circle class="data-particle" cx="1208" cy="363" r="4" style="animation-delay:-.8s"/><circle class="data-particle" cx="1335" cy="401" r="3" style="animation-delay:-1.5s"/><circle class="data-particle" cx="1464" cy="342" r="4" style="animation-delay:-2s"/></g>
                         <g stroke="#9bada3" stroke-width="1" opacity=".5"><path d="M1090 145L1160 195 1260 167 1360 220"/><path d="M1120 250L1200 196 1300 300"/></g>
                         <g fill="#78f000"><circle class="node" cx="1090" cy="145" r="6"/><circle class="node" cx="1160" cy="195" r="9"/><circle class="node" cx="1260" cy="167" r="7"/><circle class="node" cx="1360" cy="220" r="8"/></g>
                     </svg>
