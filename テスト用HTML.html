@@ -915,14 +915,14 @@
                 justify-content: center;
                 background: radial-gradient(circle at 50% 50%,#0c1710,#030504 70%);
                 pointer-events: none;
-                -webkit-clip-path: circle(130px at -9999px -9999px);
-                clip-path: circle(130px at -9999px -9999px)
+                -webkit-clip-path: circle(95px at -9999px -9999px);
+                clip-path: circle(95px at -9999px -9999px)
             }
 
             #heroEmbed .xray-logo {
-                width: 40%;
-                max-width: 420px;
-                min-width: 140px;
+                width: 60%;
+                max-width: 640px;
+                min-width: 180px;
                 filter: drop-shadow(0 0 26px rgba(120,240,0,.4))
             }
 
@@ -931,9 +931,9 @@
                 z-index: 11;
                 left: -9999px;
                 top: -9999px;
-                width: 260px;
-                height: 260px;
-                margin: -130px 0 0 -130px;
+                width: 190px;
+                height: 190px;
+                margin: -95px 0 0 -95px;
                 border-radius: 50%;
                 border: 1px solid rgba(120,240,0,.55);
                 box-shadow: 0 0 24px rgba(120,240,0,.35),inset 0 0 24px rgba(120,240,0,.25);
@@ -1435,19 +1435,19 @@
                 }
 
                 #heroEmbed .xray-hidden {
-                    -webkit-clip-path: circle(85px at -9999px -9999px);
-                    clip-path: circle(85px at -9999px -9999px)
+                    -webkit-clip-path: circle(60px at -9999px -9999px);
+                    clip-path: circle(60px at -9999px -9999px)
                 }
 
                 #heroEmbed .xray-ring {
-                    width: 170px;
-                    height: 170px;
-                    margin: -85px 0 0 -85px
+                    width: 120px;
+                    height: 120px;
+                    margin: -60px 0 0 -60px
                 }
 
                 #heroEmbed .xray-logo {
-                    width: 62%;
-                    max-width: 260px
+                    width: 80%;
+                    max-width: 340px
                 }
             }
 
@@ -2131,7 +2131,7 @@
                     var xrayHidden = document.getElementById('xrayHidden');
                     var xrayRing = document.getElementById('xrayRing');
                     var xrayClip = function(x, y) {
-                        var r = matchMedia('(max-aspect-ratio: 1/1)').matches ? 85 : 130;
+                        var r = matchMedia('(max-aspect-ratio: 1/1)').matches ? 60 : 95;
                         return 'circle(' + r + 'px at ' + x + 'px ' + y + 'px)'
                     };
                     var xrayMove = function(x, y) {
