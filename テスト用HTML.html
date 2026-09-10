@@ -912,6 +912,10 @@
                 br.br-mobile {
                     display: inline
                 }
+
+                #join .overline,#join .display {
+                    text-align: center
+                }
             }
 
             @supports not (-webkit-text-stroke: 1px black) {
@@ -1923,14 +1927,6 @@
                     object-position: right bottom
                 }
 
-                .speaker-intro .si-copy::after {
-                    content: "";
-                    position: absolute;
-                    inset: 35% -18px 0;
-                    z-index: -1;
-                    background: linear-gradient(#020606 20%,rgba(2,6,6,.76) 68%,transparent)
-                }
-
                 .speaker-intro .si-corner {
                     top: auto;
                     bottom: 37cqh;
@@ -2470,7 +2466,7 @@
                     <a href="#speaker">OUR SPEAKER</a>
                     <a href="#sessions">SESSIONS</a>
                     <a href="#join">JOIN US</a>
-                    <a class="nav-cta" href="https://www.servicenow.com/it/events/world-forum/tokyo.html" target="_blank" rel="noopener">来場登録 ↗</a>
+                    <a class="nav-cta" href="https://www.servicenow.com/jp/events/world-forum/tokyo.html" target="_blank" rel="noopener">来場登録 ↗</a>
                 </div>
             </nav>
         </div>
@@ -2668,11 +2664,44 @@
                         xrayRing.style.top = y + 'px'
                     };
                     hero.addEventListener('pointermove', function(e) {
+                        if (e.pointerType === 'touch') return;
                         var xr = hero.getBoundingClientRect();
                         xrayMove(e.clientX - xr.left, e.clientY - xr.top)
                     }, { passive: true });
-                    hero.addEventListener('pointerleave', function() {
+                    hero.addEventListener('pointerleave', function(e) {
+                        if (e.pointerType === 'touch') return;
                         xrayMove(-9999, -9999)
+                    }, { passive: true });
+
+                    var touchStartX = null, touchStartY = null, touchMode = null;
+                    hero.addEventListener('touchstart', function(e) {
+                        var t = e.touches[0];
+                        touchStartX = t.clientX;
+                        touchStartY = t.clientY;
+                        touchMode = null;
+                        var xr = hero.getBoundingClientRect();
+                        xrayMove(t.clientX - xr.left, t.clientY - xr.top)
+                    }, { passive: true });
+                    hero.addEventListener('touchmove', function(e) {
+                        var t = e.touches[0];
+                        if (touchMode === null) {
+                            var dx = Math.abs(t.clientX - touchStartX);
+                            var dy = Math.abs(t.clientY - touchStartY);
+                            if (dx > 6 || dy > 6) touchMode = dx > dy ? 'reveal' : 'scroll'
+                        }
+                        if (touchMode === 'reveal') {
+                            e.preventDefault();
+                            var xr = hero.getBoundingClientRect();
+                            xrayMove(t.clientX - xr.left, t.clientY - xr.top)
+                        }
+                    }, { passive: false });
+                    hero.addEventListener('touchend', function() {
+                        xrayMove(-9999, -9999);
+                        touchMode = null
+                    }, { passive: true });
+                    hero.addEventListener('touchcancel', function() {
+                        xrayMove(-9999, -9999);
+                        touchMode = null
                     }, { passive: true })
                 }
             })();
@@ -2780,7 +2809,7 @@
                                     <div class="si-grid"></div><div class="si-dots"></div><div class="si-mesh"></div>
                                     <section class="si-copy">
                                         <div class="si-eyebrow">SPEAKER <span class="si-burst" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 2v20M2 12h20M4.8 4.8l14.4 14.4M19.2 4.8L4.8 19.2"/></svg></span></div>
-                                        <h3 class="si-h1">寺田 永莉子</h3>
+                                        <h3 class="si-h1">寺田 <br class="br-mobile">永莉子</h3>
                                         <div class="si-roman">TERADA ERIKO</div>
                                         <div class="si-rule"><svg class="si-diamond" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 22 12 12 22 2 12Z"/></svg></div>
                                         <div class="si-company">株式会社NowTech</div>
@@ -2830,8 +2859,8 @@
                     <h2 class="display">
                         会場で、<br class="br-mobile"><span style="color:var(--orange)">次の変革を。</span>
                     </h2>
-                    <p>イベントの最新情報と参加登録は、公式サイトをご確認ください。</p>
-                    <a class="btn" href="https://www.servicenow.com/it/events/world-forum/tokyo.html" target="_blank" rel="noopener">
+                    <p>イベントの最新情報と参加登録は、<br class="br-mobile">公式サイトをご確認ください。</p>
+                    <a class="btn" href="https://www.servicenow.com/jp/events/world-forum/tokyo.html" target="_blank" rel="noopener">
                         公式イベントページへ <span class="icon-arrow" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"><line x1="20" y1="80" x2="80" y2="20"/><polyline points="42,20 80,20 80,58"/></svg></span>
                     </a>
                 </div>
