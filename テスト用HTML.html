@@ -2017,6 +2017,7 @@
                     })
                 }
                 window.addEventListener('pointermove', function(e) {
+                    if (e.pointerType === 'touch') return;
                     mouseX = e.clientX;
                     mouseY = e.clientY;
                     if (!ticking) {
@@ -2025,7 +2026,45 @@
                     }
                 }, {
                     passive: true
-                })
+                });
+
+                var touchStartX = null, touchStartY = null, touchMode = null, touchOnFlicker = false;
+                function trackTouch(x, y) {
+                    mouseX = x;
+                    mouseY = y;
+                    if (!ticking) {
+                        ticking = true;
+                        requestAnimationFrame(update)
+                    }
+                }
+                function resetGlow() {
+                    trackTouch(-9999, -9999);
+                    touchMode = null;
+                    touchOnFlicker = false
+                }
+                window.addEventListener('touchstart', function(e) {
+                    var t = e.touches[0];
+                    touchStartX = t.clientX;
+                    touchStartY = t.clientY;
+                    touchMode = null;
+                    touchOnFlicker = !!(e.target.closest && e.target.closest('.orange-flicker'));
+                    if (touchOnFlicker) trackTouch(t.clientX, t.clientY)
+                }, { passive: true });
+                window.addEventListener('touchmove', function(e) {
+                    if (!touchOnFlicker) return;
+                    var t = e.touches[0];
+                    if (touchMode === null) {
+                        var dx = Math.abs(t.clientX - touchStartX);
+                        var dy = Math.abs(t.clientY - touchStartY);
+                        if (dx > 6 || dy > 6) touchMode = dx > dy ? 'trace' : 'scroll'
+                    }
+                    if (touchMode === 'trace') {
+                        e.preventDefault();
+                        trackTouch(t.clientX, t.clientY)
+                    }
+                }, { passive: false });
+                window.addEventListener('touchend', resetGlow, { passive: true });
+                window.addEventListener('touchcancel', resetGlow, { passive: true })
             });
         </script>
         <style>
