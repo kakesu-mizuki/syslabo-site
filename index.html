@@ -321,12 +321,20 @@
 
                 .topics-badge-block {
                     margin-right: 0;
-                    text-align: left
+                    text-align: left;
+                    display: flex;
+                    align-items: center;
+                    gap: 14px
+                }
+
+                .topics-badge-caption {
+                    margin-top: 0
                 }
 
                 .topics-badge {
-                    width: 96px;
-                    height: 96px
+                    width: 76px;
+                    height: 76px;
+                    flex-shrink: 0
                 }
             }
 
@@ -1596,6 +1604,10 @@
                 #heroEmbed .copy {
                     left: 7%;
                     top: 11%
+                }
+
+                #heroEmbed .c1,#heroEmbed .c2 {
+                    top: 6%
                 }
 
                 #heroEmbed .eyebrow {
