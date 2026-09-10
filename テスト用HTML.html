@@ -255,11 +255,32 @@
             }
 
             .venue-frame {
+                position: relative;
                 display: grid;
                 grid-template-columns: 1fr;
-                border: 1px solid #3a3a3a;
                 overflow: hidden;
                 margin-top: 40px
+            }
+
+            .venue-frame:before {
+                content: "VENUE / VENUE / VENUE";
+                position: absolute;
+                top: 50%;
+                right: -5%;
+                transform: translateY(-50%);
+                z-index: 0;
+                font-size: clamp(60px,9vw,140px);
+                line-height: 1;
+                white-space: nowrap;
+                color: transparent;
+                -webkit-text-stroke: 1px rgba(126,211,33,.14);
+                font-weight: 900;
+                pointer-events: none
+            }
+
+            .venue-frame .map-info {
+                position: relative;
+                z-index: 1
             }
 
             @media(max-width: 800px) {
