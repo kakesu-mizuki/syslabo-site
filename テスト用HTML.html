@@ -144,6 +144,44 @@
                 color: var(--orange)
             }
 
+            .navlinks > a:not(.nav-cta) {
+                position: relative;
+                overflow: hidden;
+                display: inline-block
+            }
+
+            .navlinks > a:not(.nav-cta):after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: -75%;
+                width: 50%;
+                height: 100%;
+                background: linear-gradient(120deg,transparent,rgba(126,211,33,.35),transparent);
+                transform: skewX(-20deg);
+                pointer-events: none
+            }
+
+            .navlinks > a:not(.nav-cta):hover:after {
+                animation: navSheen .65s ease
+            }
+
+            @keyframes navSheen {
+                0% {
+                    left: -75%
+                }
+
+                100% {
+                    left: 125%
+                }
+            }
+
+            @media(prefers-reduced-motion: reduce) {
+                .navlinks > a:not(.nav-cta):hover:after {
+                    animation: none
+                }
+            }
+
             .hero {
                 position: relative;
                 min-height: min(860px,92vh);
@@ -2657,7 +2695,6 @@
         <main>
             <section id="venue" class="section">
                 <div class="wrap">
-                    <div class="overline reveal">VENUE</div>
                     <div class="venue-frame reveal">
                         <div class="map-info">
                             <small>VENUE / TOKYO</small>
@@ -2819,13 +2856,25 @@
                 if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
                 if (typeof Typewriter === 'undefined') return;
                 var ids = ['tw-about', 'tw-topics', 'tw-sessions'];
+                var twInstances = {};
+                ids.forEach(function(id) {
+                    var el = document.getElementById(id);
+                    if (el) el.setAttribute('data-tw-text', el.textContent)
+                });
                 var twIO = new IntersectionObserver(function(entries) {
                     entries.forEach(function(entry) {
                         if (!entry.isIntersecting) return;
-                        twIO.unobserve(entry.target);
-                        var text = entry.target.textContent;
-                        entry.target.textContent = '';
-                        new Typewriter(entry.target, { delay: 45 }).typeString(text).start()
+                        var el = entry.target;
+                        if (twInstances[el.id]) {
+                            try {
+                                twInstances[el.id].stop()
+                            } catch (e) {}
+                        }
+                        var text = el.getAttribute('data-tw-text');
+                        el.textContent = '';
+                        var tw = new Typewriter(el, { delay: 135 });
+                        twInstances[el.id] = tw;
+                        tw.typeString(text).start()
                     })
                 }, { threshold: .4 });
                 ids.forEach(function(id) {
