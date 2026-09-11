@@ -2383,7 +2383,7 @@
     <body>
         <div id="intro-tunnel" aria-hidden="true">
             <div class="intro-stage">
-                <video class="intro-hero-video" id="introVideo" src="videos/intro-tunnel.mp4" autoplay muted playsinline></video>
+                <video class="intro-hero-video" id="introVideo" autoplay muted playsinline></video>
             </div>
             <button id="introSkip" type="button">SKIP ↦</button>
         </div>
@@ -2402,7 +2402,9 @@
                 document.body.style.overflow = 'hidden';
                 var video = document.getElementById('introVideo')
                   , skipBtn = document.getElementById('introSkip')
-                  , finished = false;
+                  , finished = false
+                  , isMobile = window.matchMedia('(max-width: 800px)').matches;
+                video.src = isMobile ? 'videos/intro-tunnel-mobile.mp4' : 'videos/intro-tunnel.mp4';
                 function finish() {
                     if (finished)
                         return;
