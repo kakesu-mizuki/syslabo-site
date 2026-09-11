@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /テスト用HTML.html
+
+Sitemap: https://nowtech.syslabo.com/sitemap.xml
